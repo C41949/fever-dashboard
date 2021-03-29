@@ -6,7 +6,7 @@
 
 ## Why❓
 
-> The idea is to use this project to study Vue 3, Vite, ComposotionAPI, Chart.js and related technologies.
+> The idea is to use this project to study Vue 3, Vite, CompositionAPI, Chart.js and related technologies.
 
 ## Roadmap 🗺️
 This is a summary of the project goals:
