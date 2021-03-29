@@ -6,10 +6,9 @@ services:
     build: .
     container_name: fever-dashboard
     restart: always
-    ports:
-      - 80:80
 
-#networks:
-#  default:
-#    external:
-#      name: guardian-network
+networks:
+  default:
+    external:
+      name: guardian-network
+
