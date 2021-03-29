@@ -5,23 +5,18 @@
 <script lang="ts">
 import {defineComponent, onMounted} from 'vue'
 import Chart from "chart.js";
-import {data} from './data'
+import testData from "./data";
 
 export default defineComponent({
   name: 'HelloWorld',
   setup() {
-    const result = {
-      values: [],
-      labels: []
-    }
+    type ResultDTO = { values: number[], labels: string[] }
+    const result: ResultDTO = {values: [], labels: []}
 
-    data.data.forEach(v => {
+    testData.forEach(v => {
       result.values.push(v.temperature)
       result.labels.push(new Date(v.date).toLocaleString())
     })
-
-    result.values.length = 100
-    result.labels.length = 100
 
     onMounted(() => {
       new Chart(document.getElementById("myChart") as any, {
