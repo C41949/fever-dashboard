@@ -8,6 +8,12 @@
 
 > The idea is to use this project to study Vue 3, Vite, CompositionAPI, Chart.js and related technologies.
 
+## Current
+
+<p align="center">
+  <img src="./.images/current.png" />
+</p>
+
 ## Roadmap 🗺️
 This is a summary of the project goals:
 
