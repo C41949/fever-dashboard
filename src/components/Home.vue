@@ -17,9 +17,10 @@
 <script lang="ts">
 import {defineComponent, onMounted, ref} from 'vue'
 import Chart from "chart.js";
-import testData, {Temperatures} from "./data";
 import axios from "axios";
 
+type Temperature = { date: string, id: number, temperature: number }
+type Temperatures = Temperature[]
 type ResultDTO = { values: number[], labels: string[] }
 type Period = { begin: string, end: string }
 
