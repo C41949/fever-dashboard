@@ -4,6 +4,8 @@ type Temperature = {
   temperature: number,
 }
 
+export type Temperatures = Temperature[]
+
 const testData: Temperature[] = [{
   "date": "Mon, 29 Mar 2021 03:52:30 GMT",
   "id": 1,
