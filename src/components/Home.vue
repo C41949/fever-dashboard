@@ -62,7 +62,7 @@ export default defineComponent({
     }
 
     const period = ref(buildPeriod())
-    onMounted(() => buildChart(testData))
+    onMounted(() => buildChart())
 
     return {period, buildChart}
   }
