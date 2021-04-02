@@ -37,20 +37,19 @@ export default defineComponent({
       return {begin: toIso(begin), end: toIso(end)}
     }
 
-    const buildChart = () => {
+    const buildChart = async () => {
       const result: ResultDTO = {values: [], labels: []}
       const temperatures: Temperatures = []
 
-      axios.get('http://fever-api-nginx/temperature')
-          .then(r => temperatures.concat(r.data as Temperatures))
-          .catch(_ => console.error('Error during `buildChart()`'))
+      const {data} = await axios.get('http://kamm.io/monitor/api/temperature');
+      temperatures.push(...data.data)
 
       temperatures.forEach(v => {
         result.values.push(v.temperature)
         result.labels.push(new Date(v.date).toLocaleString())
       })
 
-      return new Chart(document.getElementById("chart") as any, {
+      new Chart(document.getElementById("chart") as any, {
         type: 'line',
         data: {
           labels: result.labels,
