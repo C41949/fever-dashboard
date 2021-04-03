@@ -3,7 +3,9 @@ version: "3.7"
 services:
 
   fever-dashboard:
-    build: .
+    build:
+      context: ./
+      dockerfile: ./nginx/Dockerfile
     container_name: fever-dashboard
     restart: always
 
