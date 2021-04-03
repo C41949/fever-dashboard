@@ -53,6 +53,21 @@ export default defineComponent({
       });
     }
 
+    const updateChart = async () => {
+      const config = { params: period.value }
+      const response = await axios.get('http://kamm.io/monitor/api/temperature', config);
+      const temperatures: Temperatures = response.data.data
+
+      const result: TemperaturesDTO = {values: [], labels: []}
+      temperatures.forEach(({temperature, date}) => {
+        result.values.push(temperature)
+        result.labels.push(new Date(date).toLocaleString())
+      })
+
+      removeData(chart)
+      addData(chart, result)
+    }
+
     const addData = (chart: Chart, data: TemperaturesDTO) => {
       chart.data.labels?.push(...data.labels);
       chart.data.datasets?.forEach((dataset) => dataset.data?.push(...data.values as any));
@@ -63,21 +78,6 @@ export default defineComponent({
       chart.data.labels = []
       chart.data.datasets?.forEach((dataset) => dataset.data = []);
       chart.update();
-    }
-
-    const updateChart = async () => {
-      const response = await axios.get('http://kamm.io/monitor/api/temperature');
-      const temperatures: Temperatures = response.data.data
-
-      const result: TemperaturesDTO = {values: [], labels: []}
-
-      temperatures.forEach(v => {
-        result.values.push(v.temperature)
-        result.labels.push(new Date(v.date).toLocaleString())
-      })
-
-      removeData(chart)
-      addData(chart, result)
     }
 
     const period = ref(buildPeriod())
