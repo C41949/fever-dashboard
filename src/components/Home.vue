@@ -1,5 +1,5 @@
 <template>
-  <form @change="buildChart()">
+  <form @change="updateChart()">
     <div>
       <label for="begin">Begin: </label>
       <input v-model="period.begin" id="begin" type="datetime-local" step="1">
@@ -21,12 +21,14 @@ import axios from "axios";
 
 type Temperature = { date: string, id: number, temperature: number }
 type Temperatures = Temperature[]
-type ResultDTO = { values: number[], labels: string[] }
+type TemperaturesDTO = { values: number[], labels: string[] }
 type Period = { begin: string, end: string }
 
 export default defineComponent({
   name: 'Home',
   setup() {
+    let chart: Chart;
+
     const buildPeriod = (): Period => {
       const end = new Date();
       const begin = new Date();
@@ -38,8 +40,33 @@ export default defineComponent({
       }
     }
 
-    const buildChart = async () => {
-      const result: ResultDTO = {values: [], labels: []}
+    const buildChart = (): Chart => {
+      return new Chart("chart", {
+        type: 'line',
+        data: {
+          labels: [],
+          datasets: [{data: [], label: "kamm.io", borderColor: "#c45850", fill: false}]
+        },
+        options: {
+          title: {display: true, text: 'Temperature x Datetime'}
+        }
+      });
+    }
+
+    const addData = (chart: Chart, data: TemperaturesDTO) => {
+      chart.data.labels?.push(data.labels);
+      chart.data.datasets?.forEach((dataset) => dataset.data?.push(data.values as any));
+      chart.update();
+    }
+
+    const removeData = (chart: Chart) => {
+      chart.data.labels?.pop();
+      chart.data.datasets?.forEach((dataset) => dataset.data?.pop());
+      chart.update();
+    }
+
+    const updateChart = async () => {
+      const result: TemperaturesDTO = {values: [], labels: []}
       const temperatures: Temperatures = []
 
       const {data} = await axios.get('http://kamm.io/monitor/api/temperature');
@@ -50,22 +77,20 @@ export default defineComponent({
         result.labels.push(new Date(v.date).toLocaleString())
       })
 
-      new Chart(document.getElementById("chart") as any, {
-        type: 'line',
-        data: {
-          labels: result.labels,
-          datasets: [{data: result.values, label: "kamm.io", borderColor: "#c45850", fill: false}]
-        },
-        options: {
-          title: {display: true, text: 'Temperature x Datetime'}
-        }
-      });
+      removeData(chart)
+      addData(chart, result)
     }
 
     const period = ref(buildPeriod())
-    onMounted(() => buildChart())
 
-    return {period, buildChart}
+    const onMountedDo = () => {
+      updateChart()
+      chart = buildChart();
+    }
+
+    onMounted(onMountedDo)
+
+    return {period, updateChart}
   }
 })
 </script>
