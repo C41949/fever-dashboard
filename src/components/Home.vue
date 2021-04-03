@@ -60,7 +60,7 @@ export default defineComponent({
     }
 
     const removeData = (chart: Chart) => {
-      chart.data.labels?.pop();
+      chart.data.labels = []
       chart.data.datasets?.forEach((dataset) => dataset.data = []);
       chart.update();
     }
