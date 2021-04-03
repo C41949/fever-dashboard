@@ -24,7 +24,7 @@ This is a summary of the project goals:
 - [x] Deploy with Docker
 - [x] Add it to Guardian network 
 - [x] Adds axios and real call to api
-- [] Think about just creating components and adding to a main dashboard
+- [ ] Think about just creating components and adding to a main dashboard
 
 ## Related
 - [🔥 fever-api](https://github.com/C41949/fever-api)
