@@ -17,9 +17,14 @@
 ## Roadmap 🗺️
 This is a summary of the project goals:
 
-- [x] a
-- [ ] b
-- [ ] c
+- [x] Create repository and README
+- [x] Choose technologies
+- [x] Basic project structure 
+- [x] Create an example using Chart.js
+- [x] Deploy with Docker
+- [x] Add it to Guardian network 
+- [x] Adds axios and real call to api
+- [] Think about just creating components and adding to a main dashboard
 
 ## Related
 - [🔥 fever-api](https://github.com/C41949/fever-api)
