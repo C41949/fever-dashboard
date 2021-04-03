@@ -54,8 +54,8 @@ export default defineComponent({
     }
 
     const addData = (chart: Chart, data: TemperaturesDTO) => {
-      chart.data.labels?.push(data.labels);
-      chart.data.datasets?.forEach((dataset) => dataset.data?.push(data.values as any));
+      chart.data.labels?.push(...data.labels);
+      chart.data.datasets?.forEach((dataset) => dataset.data?.push(...data.values as any));
       chart.update();
     }
 
@@ -66,11 +66,10 @@ export default defineComponent({
     }
 
     const updateChart = async () => {
-      const result: TemperaturesDTO = {values: [], labels: []}
-      const temperatures: Temperatures = []
+      const response = await axios.get('http://kamm.io/monitor/api/temperature');
+      const temperatures: Temperatures = response.data.data
 
-      const {data} = await axios.get('http://kamm.io/monitor/api/temperature');
-      temperatures.push(...data.data)
+      const result: TemperaturesDTO = {values: [], labels: []}
 
       temperatures.forEach(v => {
         result.values.push(v.temperature)
@@ -84,8 +83,8 @@ export default defineComponent({
     const period = ref(buildPeriod())
 
     const onMountedDo = () => {
-      updateChart()
       chart = buildChart();
+      updateChart()
     }
 
     onMounted(onMountedDo)
