@@ -2,12 +2,12 @@
   <form @change="buildChart()">
     <div>
       <label for="begin">Begin: </label>
-      <input v-model="period.begin" id="begin" type="date">
+      <input v-model="period.begin" id="begin" type="datetime-local" step="1">
 
       &nbsp;
 
       <label for="end">End: </label>
-      <input v-model="period.end" id="end" type="date">
+      <input v-model="period.end" id="end" type="datetime-local" step="1">
     </div>
   </form>
 
@@ -28,13 +28,14 @@ export default defineComponent({
   name: 'Home',
   setup() {
     const buildPeriod = (): Period => {
-      const toIso = (date: Date): string => date.toISOString().split('T')[0]
-
       const end = new Date();
       const begin = new Date();
-      begin.setMonth(begin.getMonth() - 1);
+      begin.setMinutes(begin.getMinutes() - 5);
 
-      return {begin: toIso(begin), end: toIso(end)}
+      return {
+        begin: begin.toISOString().substring(0, 19),
+        end: end.toISOString().substring(0, 19)
+      }
     }
 
     const buildChart = async () => {
