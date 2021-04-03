@@ -2,7 +2,7 @@
   <form @change="updateChart()">
     <div>
       <label for="begin">Begin: </label>
-      <input v-model="period.begin" id="begin" type="datetime-local" step="1">
+      <input v-model="period.start" id="begin" type="datetime-local" step="1">
 
       &nbsp;
 
@@ -22,7 +22,7 @@ import axios from "axios";
 type Temperature = { date: string, id: number, temperature: number }
 type Temperatures = Temperature[]
 type TemperaturesDTO = { values: number[], labels: string[] }
-type Period = { begin: string, end: string }
+type Period = { start: string, end: string }
 
 export default defineComponent({
   name: 'Home',
@@ -31,11 +31,11 @@ export default defineComponent({
 
     const buildPeriod = (): Period => {
       const end = new Date();
-      const begin = new Date();
-      begin.setMinutes(begin.getMinutes() - 5);
+      const start = new Date();
+      start.setMinutes(start.getMinutes() - 5);
 
       return {
-        begin: begin.toISOString().substring(0, 19),
+        begin: start.toISOString().substring(0, 19),
         end: end.toISOString().substring(0, 19)
       }
     }
