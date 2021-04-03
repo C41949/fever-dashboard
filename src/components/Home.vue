@@ -35,7 +35,7 @@ export default defineComponent({
       start.setMinutes(start.getMinutes() - 5);
 
       return {
-        begin: start.toISOString().substring(0, 19),
+        start: start.toISOString().substring(0, 19),
         end: end.toISOString().substring(0, 19)
       }
     }
