@@ -27,6 +27,7 @@ type Period = { start: string, end: string }
 export default defineComponent({
   name: 'Home',
   setup() {
+    const url = import.meta.env.VITE_API_URL
     let chart: Chart;
 
     const buildPeriod = (): Period => {
@@ -54,8 +55,8 @@ export default defineComponent({
     }
 
     const updateChart = async () => {
-      const config = { params: period.value }
-      const response = await axios.get('http://kamm.io/monitor/api/temperature', config);
+      const config = {params: period.value}
+      const response = await axios.get(`${url}/temperature`, config);
       const temperatures: Temperatures = response.data.data
 
       const result: TemperaturesDTO = {values: [], labels: []}
