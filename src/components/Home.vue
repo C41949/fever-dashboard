@@ -57,7 +57,7 @@ export default defineComponent({
     const updateChart = async () => {
       const config = {params: period.value}
       const response = await axios.get(`${url}/temperature`, config);
-      const temperatures: Temperatures = response.data.data
+      const temperatures: Temperatures = response.data
 
       const result: TemperaturesDTO = {values: [], labels: []}
       temperatures.forEach(({temperature, date}) => {
